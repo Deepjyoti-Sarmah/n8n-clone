@@ -1,0 +1,13 @@
+{
+  "name": "@repo/backend",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.9.6",
+    "@repo/types": "*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
