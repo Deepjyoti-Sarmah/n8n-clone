@@ -9,9 +9,6 @@ export class User {
   @Index({ unique: true })
   email!: string;
 
-  @Column({ length: 32 })
-  name!: string;
-
   @Column({ type: String })
   password!: string;
 }
