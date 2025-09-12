@@ -12,8 +12,8 @@
     "apps/server": {
       "name": "@repo/server",
       "dependencies": {
+        "@repo/commons": "*",
         "@repo/db": "*",
-        "@repo/zod": "*",
         "dotenv": "^17.2.1",
         "hono": "^4.9.7",
       },
@@ -41,6 +41,18 @@
         "@types/react-dom": "19.1.1",
         "eslint": "^9.34.0",
         "typescript": "5.9.2",
+      },
+    },
+    "packages/commons": {
+      "name": "@repo/commons",
+      "dependencies": {
+        "zod": "^4.1.8",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
       },
     },
     "packages/db": {
@@ -92,18 +104,6 @@
         "@types/react-dom": "19.1.1",
         "eslint": "^9.34.0",
         "typescript": "5.9.2",
-      },
-    },
-    "packages/zod": {
-      "name": "@repo/zod",
-      "dependencies": {
-        "zod": "^4.1.8",
-      },
-      "devDependencies": {
-        "@types/bun": "latest",
-      },
-      "peerDependencies": {
-        "typescript": "^5",
       },
     },
   },
@@ -220,6 +220,8 @@
 
     "@prisma/get-platform": ["@prisma/get-platform@6.16.1", "", { "dependencies": { "@prisma/debug": "6.16.1" } }, "sha512-kUfg4vagBG7dnaGRcGd1c0ytQFcDj2SUABiuveIpL3bthFdTLI6PJeLEia6Q8Dgh+WhPdo0N2q0Fzjk63XTyaA=="],
 
+    "@repo/commons": ["@repo/commons@workspace:packages/commons"],
+
     "@repo/db": ["@repo/db@workspace:packages/db"],
 
     "@repo/eslint-config": ["@repo/eslint-config@workspace:packages/eslint-config"],
@@ -229,8 +231,6 @@
     "@repo/typescript-config": ["@repo/typescript-config@workspace:packages/typescript-config"],
 
     "@repo/ui": ["@repo/ui@workspace:packages/ui"],
-
-    "@repo/zod": ["@repo/zod@workspace:packages/zod"],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.0.0", "", {}, "sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA=="],
 

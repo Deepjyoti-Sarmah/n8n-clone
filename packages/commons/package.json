@@ -1,5 +1,5 @@
 {
-  "name": "@repo/zod",
+  "name": "@repo/commons",
   "module": "index.ts",
   "type": "module",
   "private": true,
@@ -12,7 +12,7 @@
   "dependencies": {
     "zod": "^4.1.8"
   },
-"exports":{
+"exports": {
   ".": "./index.ts"
 }
 }

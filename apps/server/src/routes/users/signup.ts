@@ -1,6 +1,8 @@
 import { Hono, type Context } from "hono";
-import { signupSchema } from "@repo/zod";
 import { prisma } from "@repo/db";
+import { Jwt } from "hono/utils/jwt";
+import { signupSchema } from "@repo/commons";
+import { config } from "@repo/commons";
 
 const signup = new Hono();
 
@@ -42,6 +44,29 @@ signup.post(async (c: Context) => {
         409,
       );
     }
+
+    const hashedPassword = await Bun.password.hash(newUser.password, {
+      algorithm: "bcrypt",
+    });
+
+    const User = await prisma.user.create({
+      data: {
+        email: newUser.email,
+        password: hashedPassword,
+      },
+      select: {
+        id: true,
+        email: true,
+      },
+    });
+
+    const token = Jwt.sign({ id: User.id }, config.server.jwtSecret);
+
+    return c.json({
+      message: "User Sign Up Successful",
+      token: token,
+      User: User,
+    });
   } catch (error) {
     console.error("Cannot singup user", error);
     return c.json(
