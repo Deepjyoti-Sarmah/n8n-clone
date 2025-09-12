@@ -1,4 +1,3 @@
-import { postgres } from "bun";
 import dotenv from "dotenv";
 dotenv.config();
 

@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Hono, type Context } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
@@ -17,11 +16,7 @@ app.get("/", (c: Context) => {
 app.route("/api/v1", v1Routes);
 // app.route("/", webhooks);
 
-const port = config.server.port;
-console.log(port);
-console.log(config.dbURL.postgres.url);
-console.log(config.server.jwtSecret);
 export default {
   fetch: app.fetch,
-  port: port,
+  port: config.server.port,
 };
