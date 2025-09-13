@@ -14,7 +14,7 @@ app.get("/", (c: Context) => {
 });
 
 app.route("/api/v1", router);
-// app.route("/", webhooks);
+app.route("/", webhooks);
 
 export default {
   fetch: app.fetch,
