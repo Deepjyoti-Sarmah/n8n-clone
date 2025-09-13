@@ -18,4 +18,96 @@ model User {
   id       String @id @default(uuid())
   email    String @unique
   password String
+
+  credentials Credentials[]
+  workflow    Workflows[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Credentials {
+  id       String   @id @default(uuid())
+  title    String
+  platform Platform
+  data     Json
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Workflows {
+  id      String  @id @default(uuid())
+  title   String
+  enabled Boolean @default(true)
+
+  nodes       Json
+  connections Json
+
+  triggerType TriggerType
+
+  execution Executions[]
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  Webhooks   Webhooks? @relation(fields: [webhooksId], references: [id], onDelete: Cascade)
+  webhooksId String?   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Webhooks {
+  id     String  @id @default(uuid())
+  title  String
+  method Methods @default(GET)
+  secret String?
+
+  workflow Workflows?
+}
+
+model Executions {
+  id        String     @id @default(uuid())
+  status    ExecStatus @default(PENDING)
+  taskDone  Int        @default(0)
+  totalTask Int?
+
+  output Json?
+  logs   Json?
+
+  workflows   Workflows @relation(fields: [workflowsId], references: [id], onDelete: Cascade)
+  workflowsId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Platform {
+  Telegram
+  ResendEmail
+  Gemini
+}
+
+enum ExecStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum TriggerType {
+  Webhook
+  Manual
+  Cron
+}
+
+enum Methods {
+  GET
+  POST
+  PUT
+  DELETE
 }
