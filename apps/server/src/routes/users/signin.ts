@@ -1,12 +1,12 @@
 import { config, signinSchema } from "@repo/commons";
 import { prisma } from "@repo/db";
 import { Hono } from "hono";
-import { Jwt } from "hono/utils/jwt";
+import { sign } from "hono/jwt";
 
 const signin = new Hono();
 
 signin.post(async (c) => {
-  const result = signinSchema.safeParse(c.body);
+  const result = signinSchema.safeParse(c.req.json());
   if (!result.success) {
     return c.json(
       {
@@ -63,7 +63,7 @@ signin.post(async (c) => {
       );
     }
 
-    const token = Jwt.sign({ id: existingUser.id }, config.server.jwtSecret);
+    const token = await sign({ id: existingUser.id }, config.server.jwtSecret);
 
     return c.json({
       message: "User Signed In Successfully",

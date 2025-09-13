@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { config } from "@repo/commons";
 import router from "./routes/routes";
+import webhooks from "./routes/webhooks";
 
 const app = new Hono();
 
@@ -14,7 +15,7 @@ app.get("/", (c: Context) => {
 });
 
 app.route("/api/v1", router);
-app.route("/", webhooks);
+app.route("/webhooks", webhooks);
 
 export default {
   fetch: app.fetch,

@@ -1,13 +1,13 @@
 import { Hono, type Context } from "hono";
 import { prisma } from "@repo/db";
-import { Jwt } from "hono/utils/jwt";
 import { signupSchema } from "@repo/commons";
 import { config } from "@repo/commons";
+import { sign } from "hono/jwt";
 
 const signup = new Hono();
 
 signup.post(async (c: Context) => {
-  const result = signupSchema.safeParse(c.body);
+  const result = signupSchema.safeParse(c.req.json());
   if (!result.success) {
     return c.json(
       {
@@ -60,12 +60,12 @@ signup.post(async (c: Context) => {
       },
     });
 
-    const token = Jwt.sign({ id: User.id }, config.server.jwtSecret);
+    const token = await sign({ id: User.id }, config.server.jwtSecret);
 
     return c.json({
       message: "User Sign Up Successful",
       token: token,
-      User: User,
+      user: User,
     });
   } catch (error) {
     console.error("Cannot singup user", error);
