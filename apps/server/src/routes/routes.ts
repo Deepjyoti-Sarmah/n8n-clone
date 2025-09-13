@@ -4,7 +4,6 @@ import signin from "./users/signin";
 import workflows from "./workflows";
 import credentials from "./credentials";
 import users from "./users";
-import authMiddleware from "../middlewares/auth";
 
 const router = new Hono();
 

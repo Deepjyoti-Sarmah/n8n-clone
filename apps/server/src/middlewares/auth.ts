@@ -1,10 +1,10 @@
 import { config } from "@repo/commons";
 import { prisma } from "@repo/db";
-import { Hono, type Context } from "hono";
+import { Hono, type Context, type Next } from "hono";
 import { verify } from "hono/jwt";
 
 // Define types for context variables
-type Variables = {
+export type Variables = {
   user: {
     id: string;
     email: string;
@@ -18,11 +18,11 @@ interface JWTPayload {
   [key: string]: any;
 }
 
-const authMiddleware = new Hono<{ Variables: Variables }>();
-
-authMiddleware.use("*", async (c: Context<{ Variables: Variables }>, next) => {
+export const authMiddleware = async (
+  c: Context<{ Variables: Variables }>,
+  next: Next,
+) => {
   const authHeader = c.req.header("Authorization");
-
   const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
 
   if (!token) {
@@ -74,6 +74,4 @@ authMiddleware.use("*", async (c: Context<{ Variables: Variables }>, next) => {
       401,
     );
   }
-});
-
-export default authMiddleware;
+};

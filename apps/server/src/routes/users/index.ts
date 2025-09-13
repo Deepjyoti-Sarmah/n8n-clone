@@ -5,6 +5,6 @@ import signin from "./signin";
 const users = new Hono();
 
 users.route("/signup", signup);
-users.route("/singin", signin);
+users.route("/signin", signin);
 
 export default users;

@@ -33,6 +33,7 @@ webhooks.all("/:webhookId", async (c) => {
         404,
       );
     }
+
     if (webhook.secret) {
       const authHeader = c.req.header("Authorization");
       if (authHeader !== webhook.secret) {
@@ -47,12 +48,22 @@ webhooks.all("/:webhookId", async (c) => {
 
     const totalTasks = Object.keys(webhook.workflow?.nodes as object).length;
 
+    let triggerPayload: Record<string, any> = {};
+
+    try {
+      triggerPayload = c.req.json();
+    } catch (error) {
+      const url = new URL(c.req.url);
+      const queryParams = Object.fromEntries(url.searchParams.entries());
+      triggerPayload = queryParams;
+    }
+
     const execution = await prisma.executions.create({
       data: {
         workflowsId: webhook.workflow?.id!,
         totalTask: totalTasks,
         output: {
-          triggerPayload: c.body ?? {},
+          triggerPayload: triggerPayload,
         },
       },
     });
