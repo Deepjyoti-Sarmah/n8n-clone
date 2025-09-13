@@ -7,6 +7,7 @@ import authMiddleware from "../../middlewares/auth";
 
 const credentials = new Hono();
 
+credentials.use(authMiddleware);
 credentials.route("/post", addCredentials);
 credentials.route("/get", getCredentials);
 credentials.route("/update", updateCredentials);
