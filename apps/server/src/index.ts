@@ -1,8 +1,8 @@
 import { Hono, type Context } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import v1Routes from "./routes/routes";
 import { config } from "@repo/commons";
+import router from "./routes/routes";
 
 const app = new Hono();
 
@@ -13,7 +13,7 @@ app.get("/", (c: Context) => {
   return c.text("hello hono");
 });
 
-app.route("/api/v1", v1Routes);
+app.route("/api/v1", router);
 // app.route("/", webhooks);
 
 export default {

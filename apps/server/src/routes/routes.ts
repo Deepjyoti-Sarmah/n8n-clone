@@ -1,10 +1,14 @@
 import { Hono } from "hono";
 import signup from "./users/signup";
 import signin from "./users/signin";
+import workflows from "./workflows";
+import credentials from "./credentials";
+import users from "./users";
 
-const v1Routes = new Hono();
+const router = new Hono();
 
-v1Routes.route("/user/signup", signup);
-v1Routes.route("/user/signin", signin);
+router.route("/user", users);
+router.route("/credentials", credentials);
+router.route("/workflows", workflows);
 
-export default v1Routes;
+export default router;
