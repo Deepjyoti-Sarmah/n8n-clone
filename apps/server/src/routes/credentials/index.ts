@@ -3,6 +3,7 @@ import addCredentials from "./addCredentials";
 import getCredentials from "./getCredentials";
 import updateCredentials from "./updateCredentials";
 import deleteCredentials from "./deleteCredentials";
+import authMiddleware from "../../middlewares/auth";
 
 const credentials = new Hono();
 
