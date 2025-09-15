@@ -1,5 +1,6 @@
 import { prisma } from "@repo/db";
 import { Hono } from "hono";
+import { enqueueExecution } from "../redis/enqueue";
 
 const webhooks = new Hono();
 
@@ -67,6 +68,8 @@ webhooks.all("/:webhookId", async (c) => {
         },
       },
     });
+
+    await enqueueExecution(execution.id, webhook.workflow?.id!, triggerPayload);
 
     console.log("Webhook trigger execution: ", execution.id);
 
