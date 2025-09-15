@@ -2,6 +2,7 @@ import { Hono, type Context } from "hono";
 import type { Variables } from "../../middlewares/auth";
 import { createWorkFlowSchema } from "@repo/commons";
 import { prisma } from "@repo/db";
+import { enqueueExecution } from "../../redis/enqueue";
 
 const createManualWorkflow = new Hono<{ Variables: Variables }>();
 
@@ -29,6 +30,7 @@ createManualWorkflow.post(
       );
     }
 
+    let triggerPayload = {};
     try {
       const userId = c.get("userId");
 
@@ -64,12 +66,13 @@ createManualWorkflow.post(
           workflowsId: workflowId,
           totalTask: totalTasks,
           output: {
-            triggerPayload: {},
+            triggerPayload: triggerPayload,
           },
         },
       });
 
       //TODO: add redis execution trigger
+      await enqueueExecution(exection.id, workflowId, triggerPayload);
 
       return c.json({
         message: "Manual worflow triggered",
