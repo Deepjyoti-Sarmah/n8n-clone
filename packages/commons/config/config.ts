@@ -13,4 +13,7 @@ export const config = {
     port: process.env.PORT || 3002,
     jwtSecret: process.env.JWT_SECRET || "secret123",
   },
+  redis: {
+    url: process.env.REDIS_URL || "redis://localhost:6379",
+  },
 };
