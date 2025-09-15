@@ -20,16 +20,34 @@ deleteCredentials.delete(
 
     try {
       const userId = c.get("userId");
-      const credentials = await prisma.credentials.delete({
+      const credentials = await prisma.credentials.findUnique({
         where: {
           id: credentialId,
           userId: userId,
         },
       });
+
+      if (!credentials || credentials.userId !== userId) {
+        return c.json(
+          {
+            message:
+              "crdentials does not exists or Not allowed to delete credentials",
+          },
+          403,
+        );
+      }
+
+      const deletedCredentials = await prisma.credentials.delete({
+        where: {
+          id: credentialId,
+          userId: userId,
+        },
+      });
+
       return c.json(
         {
           message: "Credentials Deleted succefully",
-          credentials: credentials,
+          credentials: deleteCredentials,
         },
         200,
       );

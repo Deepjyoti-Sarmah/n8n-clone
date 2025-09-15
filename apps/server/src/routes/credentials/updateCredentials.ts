@@ -43,7 +43,24 @@ updateCredentials.put(
 
       const userId = c.get("userId");
 
-      const credentials = await prisma.credentials.update({
+      const credentials = await prisma.credentials.findUnique({
+        where: {
+          id: credentialsId,
+          userId: userId,
+        },
+      });
+
+      if (!credentials || credentials.userId !== userId) {
+        return c.json(
+          {
+            message:
+              "Credentials doesnot exists or Not allowed to update credentials",
+          },
+          403,
+        );
+      }
+
+      const updatedCredentials = await prisma.credentials.update({
         where: {
           id: credentialsId,
           userId: userId,
@@ -58,7 +75,7 @@ updateCredentials.put(
       return c.json(
         {
           message: "Credentials Updated succefully",
-          credentials: credentials,
+          credentials: updatedCredentials,
         },
         200,
       );
