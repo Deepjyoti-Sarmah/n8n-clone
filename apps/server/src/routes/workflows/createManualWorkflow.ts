@@ -2,7 +2,7 @@ import { Hono, type Context } from "hono";
 import type { Variables } from "../../middlewares/auth";
 import { createWorkFlowSchema } from "@repo/commons";
 import { prisma } from "@repo/db";
-import { enqueueExecution } from "../../redis/queue";
+import { enqueueExecution } from "@repo/redis";
 
 const createManualWorkflow = new Hono<{ Variables: Variables }>();
 

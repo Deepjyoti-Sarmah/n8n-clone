@@ -10,3 +10,4 @@ redisClient.on("error", (err) => {
 await redisClient.connect();
 
 export default redisClient;
+export * from "./queues";
