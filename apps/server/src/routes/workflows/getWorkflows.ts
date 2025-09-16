@@ -46,7 +46,7 @@ getWorkflows.get("/", async (c: Context<{ Variables: Variables }>) => {
 });
 
 getWorkflows.get("/:workflowId", async (c) => {
-  const { workflowId } = await c.req.json();
+  const { workflowId } = c.req.param();
   if (!workflowId) {
     return c.json(
       {
