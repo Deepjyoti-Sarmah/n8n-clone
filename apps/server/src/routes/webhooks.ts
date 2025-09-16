@@ -1,6 +1,5 @@
 import { prisma } from "@repo/db";
 import { Hono } from "hono";
-import { enqueueExecution } from "../redis/enqueue";
 
 const webhooks = new Hono();
 

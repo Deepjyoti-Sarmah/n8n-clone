@@ -1,5 +1,5 @@
 {
-  "name": "@repo/redis",
+  "name": "@repo/workers",
   "module": "index.ts",
   "type": "module",
   "private": true,
@@ -9,8 +9,5 @@
   "peerDependencies": {
     "typescript": "^5"
   },
-  "dependencies": {
-    "@repo/commons": "*",
-    "redis": "^5.8.2"
-  }
+  "dependencies": {}
 }

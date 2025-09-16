@@ -1,15 +1,11 @@
 import { config } from "@repo/commons";
-import { RedisClient } from "bun";
+import { createClient } from "redis";
 
-const redisClient = new RedisClient(config.redis.url);
+const redisClient = createClient({ url: config.redis.url });
 
-redisClient.onconnect = () => {
-  console.log("Connected to redis server");
-};
-
-redisClient.onclose = (error) => {
-  console.error("Disconnected from redis server:", error);
-};
+redisClient.on("error", (err) => {
+  console.error("Redis client error", err);
+});
 
 await redisClient.connect();
 
