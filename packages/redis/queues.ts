@@ -10,6 +10,8 @@ type ReadStream = {
   messages: ReadMessage[];
 };
 
+const STREAM_KEY = "workflow:execution"
+
 export const enqueueExecution = async (
   executionId: string,
   workflowId: string,
@@ -17,7 +19,7 @@ export const enqueueExecution = async (
 ) => {
   try {
     await redisClient.xAdd(
-      "workflow:execution",
+      STREAM_KEY,
       "*",
       {
         executionId,
@@ -47,7 +49,7 @@ export const dequeueExecution = async (
 ) => {
   try {
     try {
-      await redisClient.xGroupCreate("workflow:execution", consumerGroup, "0", {
+      await redisClient.xGroupCreate(STREAM_KEY, consumerGroup, "0", {
         MKSTREAM: true,
       });
     } catch (error: any) {
@@ -57,7 +59,7 @@ export const dequeueExecution = async (
     const results = (await redisClient.xReadGroup(
       consumerGroup,
       consumer,
-      [{ key: "workflow:executions", id: ">" }],
+      [{ key: STREAM_KEY, id: ">" }],
       { BLOCK: 1000, COUNT: 1 },
     )) as ReadStream[] | null;
 
@@ -89,7 +91,7 @@ export const acknowledgeExecution = async (
   consumerGroup = "workflowGroup",
 ) => {
   try {
-    await redisClient.xAck("workflow:execution", consumerGroup, messageId);
+    await redisClient.xAck(STREAM_KEY, consumerGroup, messageId);
   } catch (error) {
     console.error("Failed to acknowledge execution:", error);
   }
