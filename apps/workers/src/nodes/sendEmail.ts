@@ -1,4 +1,4 @@
-export const sendTelegramMessage = async (
+export const sendEmail = async (
   config: any,
   credentialsId: string,
   context: Record<string, any>,

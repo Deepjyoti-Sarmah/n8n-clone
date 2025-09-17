@@ -1,31 +1,13 @@
-import redisClient from "@repo/redis";
-import { resolve } from "bun";
-import dotenv from "dotenv";
-import { prisma } from "../../packages/db/src/client";
-import { ExecStatus } from "../../packages/db/generated/prisma";
-import { publishEvent } from "./src/publish";
+import { ExecStatus, prisma } from "@repo/db";
+import { publishEvent } from "./publish";
+import { runNode } from "./nodes/runner";
 
-dotenv.config();
-
-type XReadMessage = {
-  id: string;
-  message: Record<string, string>;
-};
-
-type XReadStream = {
-  name: string;
-  message: XReadMessage[];
-};
-
-const GROUP = "workflowGroup";
-const CONSUMER = `worker-${process.pid}`;
-const STREAM_KEY = "workflow:execution";
-
-const processExecution = async (executionId: string, workflowId: string) => {
+export const processExecution = async (
+  executionId: string,
+  workflowId: string,
+): Promise<void> => {
   const workflow = await prisma.workflows.findUnique({
-    where: {
-      id: workflowId,
-    },
+    where: { id: workflowId },
   });
 
   if (!workflow) {
@@ -34,24 +16,20 @@ const processExecution = async (executionId: string, workflowId: string) => {
   }
 
   const execution = await prisma.executions.findUnique({
-    where: {
-      id: executionId,
-    },
+    where: { id: executionId },
   });
 
   if (!execution) {
     console.error("Execution not found:", executionId);
+    return;
   }
 
-  const triggerPayload = (execution?.output as any).triggerPayload ?? {};
+  const triggerPayload = (execution?.output as any)?.triggerPayload ?? {};
 
+  // Update execution status to RUNNING
   await prisma.executions.update({
-    where: {
-      id: executionId,
-    },
-    data: {
-      status: ExecStatus.RUNNING,
-    },
+    where: { id: executionId },
+    data: { status: ExecStatus.RUNNING },
   });
 
   await publishEvent(workflowId, {
@@ -64,19 +42,22 @@ const processExecution = async (executionId: string, workflowId: string) => {
   const nodes = workflow.nodes as Record<string, any>;
   const connections = workflow.connections as Record<string, string[]>;
 
+  // Initialize context with trigger payload
   let context: Record<string, any> = {
     $json: { body: triggerPayload },
     $node: {},
   };
 
-  let taskDone = 0;
+  let tasksDone = 0;
 
+  // Calculate indegree for topological sort
   const indegree: Record<string, number> = {};
   Object.keys(nodes).forEach((n) => (indegree[n] = 0));
   Object.values(connections).forEach((targets) => {
     targets.forEach((t) => (indegree[t] = (indegree[t] || 0) + 1));
   });
 
+  // Start with nodes that have no incoming connections
   const queue: string[] = Object.keys(indegree).filter(
     (n) => indegree[n] === 0,
   );
@@ -95,22 +76,20 @@ const processExecution = async (executionId: string, workflowId: string) => {
       nodeType: node.type,
     });
 
-    console.log(`Execution node ${nodeId} (${node.type})`);
+    console.log(`Executing node ${nodeId} (${node.type})`);
 
     try {
       const result = await runNode(node, context, workflowId);
-      constext.$node[nodeId] = result;
+      context.$node[nodeId] = result;
 
-      taskDone++;
+      tasksDone++;
 
       await prisma.executions.update({
-        where: {
-          id: executionId,
-        },
+        where: { id: executionId },
         data: {
-          taskDone: taskDone,
+          taskDone: tasksDone,
           logs: {
-            ...(execution?.logs as any),
+            ...(execution!.logs as any),
             [nodeId]: "Success",
           },
         },
@@ -124,27 +103,25 @@ const processExecution = async (executionId: string, workflowId: string) => {
         nodeType: node.type,
       });
 
+      // Process next nodes in the dependency graph
       const nextNodes = connections[nodeId] || [];
       nextNodes.forEach((n) => {
-        console.log(`-> Next: ${n}`);
+        console.log(`→ Next: ${n}`);
         if (indegree[n] !== undefined) {
           indegree[n]--;
           if (indegree[n] === 0) queue.push(n);
         }
       });
     } catch (error: any) {
-      console.error(`Error in node ${nodeId}:`, error);
-
+      console.error(`Error in node ${nodeId}:`, error.message);
       const errorMessage = error.message;
 
       await prisma.executions.update({
-        where: {
-          id: executionId,
-        },
+        where: { id: executionId },
         data: {
           status: ExecStatus.FAILED,
           logs: {
-            ...(execution?.logs as any),
+            ...(execution!.logs as any),
             [nodeId]: `Error: ${errorMessage}`,
           },
         },
@@ -155,7 +132,7 @@ const processExecution = async (executionId: string, workflowId: string) => {
         executionId,
         workflowId,
         nodeId,
-        nodeTyde: node.type,
+        nodeType: node.type,
         error: errorMessage,
       });
 
@@ -164,22 +141,21 @@ const processExecution = async (executionId: string, workflowId: string) => {
     }
   }
 
+  // Update final execution status
   if (executionFailed) {
     await publishEvent(workflowId, {
-      type: "execution_failed",
+      type: "execution_finished",
       executionId,
       workflowId,
       status: "FAILED",
-      taskDone,
+      tasksDone,
     });
   } else {
     await prisma.executions.update({
-      where: {
-        id: executionId,
-      },
+      where: { id: executionId },
       data: {
         status: ExecStatus.SUCCESS,
-        taskDone: taskDone,
+        taskDone: tasksDone,
       },
     });
 
@@ -188,57 +164,9 @@ const processExecution = async (executionId: string, workflowId: string) => {
       executionId,
       workflowId,
       status: "SUCCESS",
-      taskDone,
+      tasksDone,
     });
   }
 
   console.log("Execution finished:", executionId);
-};
-
-const main = async () => {
-  console.log("Worker started, waiting for jobs...");
-
-  try {
-    await redisClient.xGroupCreate(STREAM_KEY, GROUP, "0", {
-      MKSTREAM: true,
-    });
-  } catch (error: any) {
-    if (!error.message.includes("BUSYGROUP")) {
-      console.error("Failed to create consumer group:", error);
-      return;
-    }
-  }
-
-  while (true) {
-    try {
-      const resp = (await redisClient.xReadGroup(
-        GROUP,
-        CONSUMER,
-        [{ key: STREAM_KEY, id: ">" }],
-        { BLOCK: 1000, COUNT: 1 },
-      )) as XReadStream[] | null;
-
-      if (!resp) continue;
-
-      if (resp && Array.isArray(resp)) {
-        for (const stream of resp) {
-          for (const message of stream.message) {
-            const { executionId, workflowId } = message.message;
-            console.log("Picked execution:", executionId);
-
-            try {
-              await processExecution(executionId, workflowId);
-            } catch (error) {
-              console.error("Failed execution:", error);
-              await redisClient.xAck(STREAM_KEY, GROUP, message.id);
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Worker loop error:", error);
-      // pause before retrying
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-  }
 };
