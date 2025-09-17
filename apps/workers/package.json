@@ -7,13 +7,16 @@
     "dev": "bun run --hot src/index.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/mustache": "^4.2.6"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "@repo/db": "*",
     "@repo/redis": "*",
-    "@repo/db": "*"
+    "mustache": "^4.2.0",
+    "resend": "^6.1.0"
   }
 }
