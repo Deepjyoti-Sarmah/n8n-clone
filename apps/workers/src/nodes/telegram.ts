@@ -1,6 +1,6 @@
 import { prisma } from "@repo/db";
 import { fetch } from "bun";
-import Mustach from "mustache";
+import Mustache from "mustache";
 
 type TelegramCred = {
   botToken: string;
@@ -31,7 +31,7 @@ export const sendTelegramMessage = async (
       throw new Error("Telegram credentials invalid");
     }
 
-    const message = Mustach.render(config.message, context);
+    const message = Mustache.render(config.message, context);
 
     const resp = await fetch(
       `https://api.telegram.org/bot${botToken}/sendMessage`,
