@@ -1,7 +1,5 @@
-import { prisma, ExecStatus } from "@repo/db";
 import redisClient from "@repo/redis";
 import dotenv from "dotenv";
-import { publishEvent } from "./publish";
 import { processExecution } from "./execution";
 
 dotenv.config();
