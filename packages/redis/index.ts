@@ -11,3 +11,4 @@ await redisClient.connect();
 
 export default redisClient;
 export * from "./queues";
+export * from "./memory";

@@ -18,7 +18,6 @@ export const sendTelegramMessage = async (
         id: credentialsId,
       },
     });
-
     if (!creds) {
       throw new Error("Telegram credentials not found");
     }

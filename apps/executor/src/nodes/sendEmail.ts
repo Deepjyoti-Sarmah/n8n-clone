@@ -40,7 +40,7 @@ export const sendEmail = async (
 
     return { to, subject, body };
   } catch (error) {
-    console.error("Telegram node error", error);
+    console.error("Resend email node error", error);
     throw error;
   }
 };
