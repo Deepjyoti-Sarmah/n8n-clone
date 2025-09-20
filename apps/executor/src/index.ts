@@ -80,7 +80,6 @@ process.on("SIGTERM", () => {
   process.exit(0);
 });
 
-// Start the worker
 main().catch((error) => {
   console.error("Failed to start worker:", error);
   process.exit(1);
