@@ -30,7 +30,7 @@ function shouldContinue({ messages }: typeof MessagesAnnotation.State) {
 
 async function callModel(
   state: typeof MessagesAnnotation.State,
-  model: ChatGoogleGenerativeAI,
+  model: ReturnType<typeof ChatGoogleGenerativeAI.prototype.bindTools>,
 ) {
   const response = await model.invoke(state.messages);
   return { messages: [response] };
