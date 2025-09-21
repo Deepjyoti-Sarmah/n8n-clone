@@ -16,6 +16,8 @@ export const runNode = async (
           node.credentialsId,
           context,
         );
+      case "Gemini":
+        return await run;
 
       default:
         throw new Error(`Unknown node type: ${node.type}`);
