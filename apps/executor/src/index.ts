@@ -69,7 +69,6 @@ const main = async (): Promise<void> => {
   }
 };
 
-// Graceful shutdown handling
 process.on("SIGINT", () => {
   console.log(`Worker ${CONSUMER} shutting down gracefully...`);
   process.exit(0);
