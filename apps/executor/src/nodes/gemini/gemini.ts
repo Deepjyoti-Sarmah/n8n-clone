@@ -14,7 +14,6 @@ import {
 } from "@langchain/langgraph";
 import { resolveTemplate } from "../../../utils/utils";
 import { prisma } from "@repo/db";
-import { tools } from "../../tools/calculate";
 import { addMemory, getMemory } from "@repo/redis";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { allTools } from "../../tools";
@@ -85,7 +84,7 @@ export async function runGeminiNode(
       history = await getMemory(workflowId);
     }
 
-    const toolNode = new ToolNode(tools);
+    const toolNode = new ToolNode(allTools);
 
     const workflow = new StateGraph(MessagesAnnotation)
       .addNode("agent", async (state) => callModel(state, model))
