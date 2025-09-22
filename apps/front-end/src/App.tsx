@@ -1,14 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Button } from "./components/ui/button";
+import Dashboard from "./pages/dashboard";
 
 function App() {
   return (
     <>
-      <div>
-        <Button className="text-3xl text-primary bg-secondary">
-          Hi there!
-        </Button>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
