@@ -1,6 +1,7 @@
 import { Search, Filter, MoreHorizontal, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface WorkflowListProps {
   className?: string;
@@ -18,6 +19,7 @@ const workflows = [
 ];
 
 export function WorkflowList({ className }: WorkflowListProps) {
+  const navigate = useNavigate();
   return (
     <div className={cn("space-y-6", className)}>
       {/* Header Actions */}
@@ -39,7 +41,10 @@ export function WorkflowList({ className }: WorkflowListProps) {
           </Button>
         </div>
 
-        <Button className="bg-gradient-n8n hover:opacity-90 text-white">
+        <Button
+          className="hover:opacity-90 text-white "
+          onClick={() => navigate("/workflow/new")}
+        >
           Create Workflow
         </Button>
       </div>
