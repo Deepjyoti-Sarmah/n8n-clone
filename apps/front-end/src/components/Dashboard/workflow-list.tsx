@@ -30,7 +30,7 @@ export function WorkflowList({ className }: WorkflowListProps) {
             <input
               type="text"
               placeholder="Search"
-              className="w-full pl-10 pr-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full pl-10 pr-4 py-2  border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -52,7 +52,7 @@ export function WorkflowList({ className }: WorkflowListProps) {
       </div>
 
       {/* Info Banner */}
-      <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      {/*<div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center space-x-3">
           <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
             <span className="text-primary text-xs">⚡</span>
@@ -65,7 +65,7 @@ export function WorkflowList({ className }: WorkflowListProps) {
         <button className="text-muted-foreground hover:text-foreground self-start sm:self-center">
           ×
         </button>
-      </div>
+      </div>*/}
 
       {/* Workflow Items */}
       <div className="space-y-3">

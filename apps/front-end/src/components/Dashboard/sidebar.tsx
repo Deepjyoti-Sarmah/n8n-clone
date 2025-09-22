@@ -1,13 +1,4 @@
-import {
-  Home,
-  FileText,
-  Variable,
-  BarChart3,
-  HelpCircle,
-  Sparkles,
-  Settings,
-  User,
-} from "lucide-react";
+import { Home, BarChart3, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -16,11 +7,11 @@ interface SidebarProps {
 
 const navigationItems = [
   { icon: Home, label: "Overview", active: true },
-  { icon: FileText, label: "Templates" },
-  { icon: Variable, label: "Variables" },
+  // { icon: FileText, label: "Templates" },
+  // { icon: Variable, label: "Variables" },
   { icon: BarChart3, label: "Insights" },
-  { icon: HelpCircle, label: "Help" },
-  { icon: Sparkles, label: "What's New" },
+  // { icon: HelpCircle, label: "Help" },
+  // { icon: Sparkles, label: "What's New" },
 ];
 
 export function Sidebar({ className }: SidebarProps) {
