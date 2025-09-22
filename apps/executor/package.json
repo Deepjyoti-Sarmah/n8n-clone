@@ -17,6 +17,7 @@
     "@langchain/core": "^0.3.77",
     "@langchain/google-genai": "^0.2.18",
     "@langchain/langgraph": "^0.4.9",
+    "@langchain/tavily": "^0.1.5",
     "@repo/db": "*",
     "@repo/redis": "*",
     "mustache": "^4.2.0",

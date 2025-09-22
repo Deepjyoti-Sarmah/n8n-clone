@@ -17,6 +17,7 @@ import { prisma } from "@repo/db";
 import { tools } from "../../tools/calculate";
 import { addMemory, getMemory } from "@repo/redis";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
+import { allTools } from "../../tools";
 
 function shouldContinue({ messages }: typeof MessagesAnnotation.State) {
   const lastMessage = messages[messages.length - 1] as AIMessage;
@@ -42,7 +43,11 @@ export async function runGeminiNode(
   workflowId?: string,
 ) {
   try {
-    let { prompt, memory, model: configModel } = node.config;
+    let {
+      prompt,
+      memory,
+      model: configModel = "gemini-2.0-flash",
+    } = node.config;
 
     if (prompt && typeof prompt === "string" && prompt.includes("{{")) {
       prompt = resolveTemplate(prompt, context);
@@ -69,7 +74,7 @@ export async function runGeminiNode(
     const model = new ChatGoogleGenerativeAI({
       apiKey: geminiApiKey,
       model: configModel,
-    }).bindTools(tools);
+    }).bindTools(allTools);
 
     let history: {
       role: "user" | "assistant";

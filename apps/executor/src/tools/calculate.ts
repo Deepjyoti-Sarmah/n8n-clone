@@ -20,7 +20,7 @@ function calculateDivision(a: number, b: number): number {
   return a / b;
 }
 
-export const tools = [
+export const calculateTools = [
   tool(
     async (input: any) => {
       const { a, b } = input;
@@ -35,7 +35,7 @@ export const tools = [
         a: z.number().describe("First number"),
         b: z.number().describe("Second number"),
       }),
-    }
+    },
   ),
 
   tool(
@@ -52,7 +52,7 @@ export const tools = [
         a: z.number().describe("First number"),
         b: z.number().describe("Second number"),
       }),
-    }
+    },
   ),
 
   tool(
@@ -69,7 +69,7 @@ export const tools = [
         a: z.number().describe("Base number"),
         b: z.number().describe("Exponent"),
       }),
-    }
+    },
   ),
 
   tool(
@@ -86,7 +86,7 @@ export const tools = [
         a: z.number().describe("First number"),
         b: z.number().describe("Second number"),
       }),
-    }
+    },
   ),
 
   tool(
@@ -103,6 +103,6 @@ export const tools = [
         a: z.number().describe("Divident ( number to be divided)"),
         b: z.number().describe("Divisor ( number to dived by)"),
       }),
-    }
+    },
   ),
 ];
