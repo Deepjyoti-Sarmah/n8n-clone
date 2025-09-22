@@ -11,13 +11,21 @@ export function StatCard({ title, value, subtitle, className }: StatCardProps) {
   return (
     <div
       className={cn(
-        "bg-gradient-card border border-border rounded-lg p-6 space-y-2",
-        className
+        "bg-card border border-border rounded-lg p-6 space-y-2 min-h-[120px] flex flex-col justify-between",
+        className,
       )}
     >
-      <h3 className="text-card-foreground font-semibold text-sm">{title}</h3>
-      <p className="text-card-foreground/60 text-xs">{subtitle}</p>
-      <div className="text-3xl font-bold text-card-foreground">{value}</div>
+      <div className="space-y-1">
+        <h3 className="text-card-foreground font-semibold text-sm leading-tight">
+          {title}
+        </h3>
+        <p className="text-muted-foreground text-xs leading-relaxed">
+          {subtitle}
+        </p>
+      </div>
+      <div className="text-3xl font-bold text-card-foreground mt-auto">
+        {value}
+      </div>
     </div>
   );
 }

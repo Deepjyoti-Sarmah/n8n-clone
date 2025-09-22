@@ -6,13 +6,15 @@ import Workflow from "./pages/workflow";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/workflow/new" element={<Workflow />} />
-          <Route path="/workflow/:id" element={<Workflow />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="min-h-screen bg-background">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/workflow/new" element={<Workflow />} />
+            <Route path="/workflow/:id" element={<Workflow />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </>
   );
 }

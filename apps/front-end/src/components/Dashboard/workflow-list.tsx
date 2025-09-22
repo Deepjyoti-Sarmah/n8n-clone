@@ -23,26 +23,28 @@ export function WorkflowList({ className }: WorkflowListProps) {
   return (
     <div className={cn("space-y-6", className)}>
       {/* Header Actions */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="relative">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search"
-              className="pl-10 pr-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring w-64"
+              className="w-full pl-10 pr-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
-          <select className="bg-input border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
-            <option>Sort by last updated</option>
-          </select>
-          <Button variant="outline" size="sm">
-            <Filter className="w-4 h-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <select className="bg-input border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+              <option>Sort by last updated</option>
+            </select>
+            <Button variant="outline" size="sm">
+              <Filter className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
         <Button
-          className="hover:opacity-90 text-white "
+          className="hover:opacity-90 text-white w-full sm:w-auto"
           onClick={() => navigate("/workflow/new")}
         >
           Create Workflow
@@ -50,9 +52,9 @@ export function WorkflowList({ className }: WorkflowListProps) {
       </div>
 
       {/* Info Banner */}
-      <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-center justify-between">
+      <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center space-x-3">
-          <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center">
+          <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
             <span className="text-primary text-xs">⚡</span>
           </div>
           <div className="text-foreground">
@@ -60,7 +62,7 @@ export function WorkflowList({ className }: WorkflowListProps) {
             <button className="text-primary underline">pre-built agents</button>
           </div>
         </div>
-        <button className="text-muted-foreground hover:text-foreground">
+        <button className="text-muted-foreground hover:text-foreground self-start sm:self-center">
           ×
         </button>
       </div>
@@ -72,13 +74,13 @@ export function WorkflowList({ className }: WorkflowListProps) {
             key={workflow.id}
             className="bg-card border border-border rounded-lg p-4 hover:bg-card/80 transition-colors cursor-pointer"
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center space-x-4 min-w-0 flex-1">
+                <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
                   <span className="text-muted-foreground text-xs">📋</span>
                 </div>
-                <div>
-                  <h3 className="text-card-foreground font-medium">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-card-foreground font-medium truncate">
                     {workflow.name}
                   </h3>
                   <p className="text-muted-foreground text-sm">
@@ -88,7 +90,7 @@ export function WorkflowList({ className }: WorkflowListProps) {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 flex-shrink-0">
                 {workflow.isPersonal && (
                   <div className="flex items-center space-x-2">
                     <User className="w-4 h-4 text-muted-foreground" />
@@ -113,7 +115,7 @@ export function WorkflowList({ className }: WorkflowListProps) {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
         <span className="text-muted-foreground text-sm">Total 1</span>
         <div className="flex items-center space-x-4">
           <span className="text-muted-foreground text-sm">1</span>

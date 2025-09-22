@@ -64,7 +64,7 @@ export default function Workflow() {
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+    [setEdges],
   );
 
   const onAddNode = useCallback(() => {
@@ -91,32 +91,40 @@ export default function Workflow() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center gap-4">
+        <header className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
+          <div className="flex items-center gap-4 min-w-0">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/")}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 flex-shrink-0"
             >
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">👤 Personal</span>
-              <span className="text-foreground font-medium">My workflow 2</span>
-              <Button variant="ghost" size="sm" className="text-xs">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-muted-foreground flex-shrink-0">
+                👤 Personal
+              </span>
+              <span className="text-foreground font-medium truncate">
+                My workflow 2
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs flex-shrink-0"
+              >
                 + Add tag
               </Button>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <Badge variant="secondary" className="flex items-center gap-1">
               Inactive
               <div className="w-2 h-2 rounded-full bg-muted-foreground" />
@@ -132,8 +140,8 @@ export default function Workflow() {
         </header>
 
         {/* Tabs */}
-        <div className="border-b border-border">
-          <div className="flex px-4">
+        <div className="border-b border-border flex-shrink-0">
+          <div className="flex px-6">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -151,7 +159,7 @@ export default function Workflow() {
         </div>
 
         {/* Workflow Canvas */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative min-h-0">
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -159,7 +167,7 @@ export default function Workflow() {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
-            className="bg-background"
+            className="bg-background w-full h-full"
             fitView
           >
             <Controls className="bg-card border border-border" />
@@ -168,7 +176,7 @@ export default function Workflow() {
           </ReactFlow>
 
           {/* Add Node Button */}
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 z-10">
             <Button onClick={onAddNode} className="flex items-center gap-2">
               ➕ Add Node
             </Button>
@@ -176,7 +184,7 @@ export default function Workflow() {
 
           {/* Empty State */}
           {nodes.length === 1 && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
               <div className="text-center">
                 <div className="w-20 h-20 border-2 border-dashed border-muted-foreground/30 rounded-lg flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">➕</span>
@@ -188,7 +196,7 @@ export default function Workflow() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border p-4">
+        <div className="border-t border-border px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm">

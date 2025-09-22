@@ -26,7 +26,7 @@ export function WorkflowTabs({ className }: TabsProps) {
               "pb-3 px-1 border-b-2 font-medium text-sm transition-colors duration-200 flex items-center space-x-2",
               activeTab === tab.id
                 ? "border-primary text-primary"
-                : "border-transparent text-muted-foreground hover:text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground",
             )}
           >
             <span>{tab.label}</span>
