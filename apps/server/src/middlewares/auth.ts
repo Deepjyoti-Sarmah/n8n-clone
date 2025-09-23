@@ -3,7 +3,6 @@ import { prisma } from "@repo/db";
 import { Hono, type Context, type Next } from "hono";
 import { verify } from "hono/jwt";
 
-// Define types for context variables
 export type Variables = {
   user: {
     id: string;

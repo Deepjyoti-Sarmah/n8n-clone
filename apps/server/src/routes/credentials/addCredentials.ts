@@ -30,6 +30,23 @@ addCredentials.post("/", async (c: Context<{ Variables: Variables }>) => {
 
     const userId = c.get("userId");
 
+    const existingCredentials = await prisma.credentials.findFirst({
+      where: {
+        userId: userId,
+        platform: data.platform,
+        title: data.title,
+      },
+    });
+
+    if (existingCredentials) {
+      return c.json(
+        {
+          message: "Credentials already exists",
+        },
+        409,
+      );
+    }
+
     const credentials = await prisma.credentials.create({
       data: {
         title: data.title,

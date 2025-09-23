@@ -61,6 +61,7 @@ getCredentials.get(
       const credentials = await prisma.credentials.findUnique({
         where: {
           id: credentialId,
+          userId: userId,
         },
       });
 
