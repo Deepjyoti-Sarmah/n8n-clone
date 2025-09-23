@@ -6,18 +6,24 @@ export const processExecution = async (
   executionId: string,
   workflowId: string,
 ): Promise<void> => {
-  const workflow = await prisma.workflows.findUnique({
+  const workflowWithExecution = await prisma.workflows.findUnique({
     where: { id: workflowId },
+    include: {
+      execution: {
+        where: {
+          id: executionId,
+        },
+        take: 1,
+      },
+    },
   });
 
-  if (!workflow) {
+  if (!workflowWithExecution) {
     console.error("Workflow not found:", workflowId);
     return;
   }
 
-  const execution = await prisma.executions.findUnique({
-    where: { id: executionId },
-  });
+  const execution = workflowWithExecution.execution[0];
 
   if (!execution) {
     console.error("Execution not found:", executionId);
@@ -39,8 +45,11 @@ export const processExecution = async (
     totalTasks: execution?.totalTask ?? 0,
   });
 
-  const nodes = workflow.nodes as Record<string, any>;
-  const connections = workflow.connections as Record<string, string[]>;
+  const nodes = workflowWithExecution.nodes as Record<string, any>;
+  const connections = workflowWithExecution.connections as Record<
+    string,
+    string[]
+  >;
 
   // Initialize context with trigger payload
   let context: Record<string, any> = {
@@ -49,6 +58,7 @@ export const processExecution = async (
   };
 
   let tasksDone = 0;
+  let executionFailed = false;
 
   // Calculate indegree for topological sort
   const indegree: Record<string, number> = {};
@@ -62,9 +72,7 @@ export const processExecution = async (
     (n) => indegree[n] === 0,
   );
 
-  let executionFailed = false;
-
-  while (queue.length > 0) {
+  while (queue.length > 0 && !executionFailed) {
     const nodeId = queue.shift()!;
     const node = nodes[nodeId];
 
