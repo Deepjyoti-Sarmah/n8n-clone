@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Dashboard from "./pages/dashboard";
-import Landing from "./pages/landing";
-import SignInPage from "./pages/sign-in";
-import SignUpPage from "./pages/sign-up";
-import NotFound from "./pages/not-found";
-import WorkflowEditor from "./pages/workflowEditor";
+import Dashboard from "./pages/Dashboard";
+import Landing from "./pages/Landing";
+import SignInPage from "./pages/SignIn";
+import SignUpPage from "./pages/SignUp";
+import NotFound from "./pages/NotFound";
+import WorkflowEditor from "./pages/WorkflowEditor";
 
 function App() {
   return (
