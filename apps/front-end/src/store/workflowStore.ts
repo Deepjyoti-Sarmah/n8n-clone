@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import {
-  Node,
-  Edge,
-  Connection,
+  type Node,
+  type Edge,
+  type Connection,
   addEdge,
   applyNodeChanges,
   applyEdgeChanges,
-  NodeChange,
-  EdgeChange,
+  type NodeChange,
+  type EdgeChange,
 } from "@xyflow/react";
 
 interface WorkflowState {
