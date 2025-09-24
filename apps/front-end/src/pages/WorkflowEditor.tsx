@@ -29,6 +29,7 @@ import {
   GitBranch,
   Search,
 } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
 
 interface WorkflowNodeData {
   type: "trigger" | "action" | "condition" | "webhook";

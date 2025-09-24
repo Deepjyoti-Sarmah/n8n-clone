@@ -20,10 +20,11 @@ import {
   XCircle,
   Zap,
   Activity,
+  Key,
 } from "lucide-react";
 import { workflowsAPI, credentialsAPI } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
-import { Navbar } from "@/components/Navbar";
+import { BackButton } from "@/components/BackButton";
 
 interface Workflow {
   id: string;
@@ -156,13 +157,16 @@ export function Dashboard() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <Navbar />
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+      <div className="flex justify-between items-start">
+        <div className="space-y-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <BackButton />
+          </div>
           <p className="text-muted-foreground">Welcome back, {user?.email}</p>
         </div>
+
         <Button onClick={handleCreateWorkflow}>
           <Plus className="mr-2 h-4 w-4" />
           New Workflow
@@ -306,24 +310,64 @@ export function Dashboard() {
         </TabsContent>
 
         <TabsContent value="credentials" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {credentials.map((credential) => (
-              <Card key={credential.id}>
-                <CardHeader>
-                  <CardTitle className="text-lg">{credential.title}</CardTitle>
-                  <CardDescription>
-                    <Badge variant="outline">{credential.platform}</Badge>
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    Created{" "}
-                    {new Date(credential.createdAt).toLocaleDateString()}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {credentials.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center border rounded-lg bg-muted/30">
+              <Key className="h-8 w-8 text-muted-foreground mb-3" />
+              <p className="text-lg font-medium">No credentials found</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Add your first credential to start connecting services.
+              </p>
+              <Button onClick={() => navigate("/credentials")}>
+                Manage Credentials
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold">Your Credentials</h3>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate("/credentials")}
+                >
+                  Manage All
+                </Button>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {credentials.slice(0, 3).map((credential) => (
+                  <Card
+                    key={credential.id}
+                    className="cursor-pointer hover:shadow-md transition"
+                    onClick={() => navigate("/credentials")}
+                  >
+                    <CardHeader>
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-muted">
+                          <Key className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-lg">
+                            {credential.title}
+                          </CardTitle>
+                          <CardDescription>
+                            <Badge variant="outline">
+                              {credential.platform}
+                            </Badge>
+                          </CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        Created{" "}
+                        {new Date(credential.createdAt).toLocaleDateString()}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
         </TabsContent>
 
         <TabsContent value="activity" className="space-y-4">

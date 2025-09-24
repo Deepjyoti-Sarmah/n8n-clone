@@ -41,6 +41,7 @@ import {
 } from "lucide-react";
 import { credentialsAPI } from "@/lib/api";
 import { useCredentialsStore } from "@/store/credentialsStore";
+import { BackButton } from "@/components/BackButton";
 // import { useToast } from "@/hooks/use-toast";
 
 const platformIcons = {
@@ -393,13 +394,17 @@ export function CredentialsManager() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Credentials</h1>
+      <div className="flex justify-between items-start">
+        <div className="space-y-1">
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-bold tracking-tight">Credentials</h1>
+            <BackButton />
+          </div>
           <p className="text-muted-foreground">
             Manage your API keys and authentication credentials securely
           </p>
         </div>
+
         <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
           <DialogTrigger asChild>
             <Button onClick={openAddDialog}>
