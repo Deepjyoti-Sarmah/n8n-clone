@@ -18,9 +18,6 @@ import { EmailNode } from "./nodes/EmailNode";
 import { NodeSidebar } from "./NodeSidebar";
 import { WorkflowToolbar } from "./WorkflowToolbar";
 import { NodeConfigPanel } from "./NodeConfigPanel";
-// import { NodeSidebar } from "./NodeSidebar";
-// import { NodeConfigPanel } from "./NodeConfigPanel";
-// import { WorkflowToolbar } from "./WorkflowToolbar";
 
 const nodeTypes = {
   gemini: GeminiNode,
