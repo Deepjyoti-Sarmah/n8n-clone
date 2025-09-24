@@ -104,11 +104,11 @@ export function CredentialsManager() {
       }
     } catch (error) {
       console.error("Failed to load credentials:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load credentials",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to load credentials",
+      //   variant: "destructive",
+      // });
     } finally {
       setLoading(false);
     }
@@ -127,10 +127,10 @@ export function CredentialsManager() {
         if (response.success) {
           updateCredential(selectedCredential.id, response.data.credentials);
           setShowEditDialog(false);
-          toast({
-            title: "Success",
-            description: "Credential updated successfully",
-          });
+          // toast({
+          //   title: "Success",
+          //   description: "Credential updated successfully",
+          // });
         }
       } else {
         // Create new credential
@@ -138,10 +138,10 @@ export function CredentialsManager() {
         if (response.success) {
           addCredential(response.data.credentials);
           setShowAddDialog(false);
-          toast({
-            title: "Success",
-            description: "Credential created successfully",
-          });
+          // toast({
+          //   title: "Success",
+          //   description: "Credential created successfully",
+          // });
         }
       }
 
@@ -167,17 +167,18 @@ export function CredentialsManager() {
         deleteCredential(selectedCredential.id);
         setShowDeleteDialog(false);
         setSelectedCredential(null);
-        toast({
-          title: "Success",
-          description: "Credential deleted successfully",
-        });
+        // toast({
+        //   title: "Success",
+        //   description: "Credential deleted successfully",
+        // });
       }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete credential",
-        variant: "destructive",
-      });
+    } catch (error: any) {
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to delete credential",
+      //   variant: "destructive",
+      // });
+      console.error("credential error", error);
     } finally {
       setSubmitting(false);
     }
