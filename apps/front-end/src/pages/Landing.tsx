@@ -57,7 +57,7 @@ export function Landing() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header - Reduced height and better spacing */}
-      <header className="px-6 lg:px-8 h-16 flex items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="px-6 lg:mx-12 lg:px-10 h-16 flex items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Link to="/" className="flex items-center justify-center">
           <Zap className="h-6 w-6 text-primary" />
           <span className="ml-2 text-lg font-bold">WorkflowAI</span>
