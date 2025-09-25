@@ -1,6 +1,6 @@
 import { ExecStatus, prisma } from "@repo/db";
-import { publishEvent } from "./publish";
 import { runNode } from "./nodes/runner";
+import { publishExecution, publishWorkflow } from "@repo/redis";
 
 export const processExecution = async (
   executionId: string,
@@ -38,11 +38,15 @@ export const processExecution = async (
     data: { status: ExecStatus.RUNNING },
   });
 
-  await publishEvent(workflowId, {
+  await publishExecution(executionId, workflowId, {
+    type: "execution_started",
+    totalTasks: execution?.totalTask ?? 0,
+  });
+
+  await publishWorkflow(workflowId, {
     type: "execution_started",
     executionId,
-    workflowId,
-    totalTasks: execution?.totalTask ?? 0,
+    totalTasks: execution.totalTask ?? 0,
   });
 
   const nodes = workflowWithExecution.nodes as Record<string, any>;
@@ -76,10 +80,15 @@ export const processExecution = async (
     const nodeId = queue.shift()!;
     const node = nodes[nodeId];
 
-    await publishEvent(workflowId, {
+    await publishExecution(executionId, workflowId, {
+      type: "node_started",
+      nodeId,
+      nodeType: node.type,
+    });
+
+    await publishWorkflow(workflowId, {
       type: "node_started",
       executionId,
-      workflowId,
       nodeId,
       nodeType: node.type,
     });
@@ -103,10 +112,16 @@ export const processExecution = async (
         },
       });
 
-      await publishEvent(workflowId, {
+      await publishExecution(executionId, workflowId, {
+        type: "node_started",
+        nodeId,
+        nodeType: node.type,
+        result,
+      });
+
+      await publishWorkflow(workflowId, {
         type: "node_succeeded",
         executionId,
-        workflowId,
         nodeId,
         nodeType: node.type,
       });
@@ -135,10 +150,16 @@ export const processExecution = async (
         },
       });
 
-      await publishEvent(workflowId, {
+      await publishExecution(executionId, workflowId, {
+        type: "node_failed",
+        nodeId,
+        nodeType: node.type,
+        error: errorMessage,
+      });
+
+      await publishWorkflow(workflowId, {
         type: "node_failed",
         executionId,
-        workflowId,
         nodeId,
         nodeType: node.type,
         error: errorMessage,
@@ -151,10 +172,15 @@ export const processExecution = async (
 
   // Update final execution status
   if (executionFailed) {
-    await publishEvent(workflowId, {
+    await publishExecution(executionId, workflowId, {
+      type: "execution_finished",
+      status: "FAILED",
+      tasksDone,
+    });
+
+    await publishWorkflow(workflowId, {
       type: "execution_finished",
       executionId,
-      workflowId,
       status: "FAILED",
       tasksDone,
     });
@@ -167,10 +193,15 @@ export const processExecution = async (
       },
     });
 
-    await publishEvent(workflowId, {
+    await publishExecution(executionId, workflowId, {
+      type: "execution_finished",
+      status: "SUCCESS",
+      tasksDone,
+    });
+
+    await publishWorkflow(workflowId, {
       type: "execution_finished",
       executionId,
-      workflowId,
       status: "SUCCESS",
       tasksDone,
     });
