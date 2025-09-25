@@ -1,10 +1,14 @@
 {
-  "name": "ws_server",
+  "name": "@repo/ws_server",
   "module": "index.ts",
   "type": "module",
   "private": true,
   "devDependencies": {
     "@types/bun": "latest"
+  },
+  "dependencies": {
+    "@repo/redis": "*",
+    "@repo/commons": "*"
   },
   "peerDependencies": {
     "typescript": "^5"

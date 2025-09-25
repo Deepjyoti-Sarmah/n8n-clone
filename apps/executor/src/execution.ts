@@ -113,7 +113,7 @@ export const processExecution = async (
       });
 
       await publishExecution(executionId, workflowId, {
-        type: "node_started",
+        type: "node_succeeded",
         nodeId,
         nodeType: node.type,
         result,
