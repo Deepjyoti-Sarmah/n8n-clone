@@ -5,14 +5,15 @@ import {
   subscribeToWorkflow,
 } from "@repo/redis";
 
-type WebSocketData = {
-  subscriptions: Map<string, () => Promise<void>>;
-  clinetId: string;
-};
-
+// type WebSocketData = {
+//   subscriptions: Map<string, () => Promise<void>>;
+//   clientId: string; // Fixed typo: was "clinetId"
+// };
+//
 const activeConnections = new Set<any>();
 
-const server = Bun.serve<WebSocketData>({
+// Remove the generic type parameter - Bun will infer it
+const server = Bun.serve({
   fetch(req, server) {
     const url = new URL(req.url);
 
@@ -47,25 +48,25 @@ const server = Bun.serve<WebSocketData>({
   },
 
   websocket: {
-    async open(ws) {
+    async open(ws: any) { // Add type annotation
       activeConnections.add(ws);
       console.log(
-        `Client ${ws.data.clinetId} connected. Total connections: ${activeConnections.size}`,
+        `Client ${ws.data.clientId} connected. Total connections: ${activeConnections.size}`, // Fixed typo
       );
 
       ws.send(
         JSON.stringify({
           type: "connected",
-          clinetId: ws.data.clinetId,
+          clientId: ws.data.clientId, // Fixed typo
           timestamp: Date.now(),
         }),
       );
     },
 
-    async message(ws, message) {
+    async message(ws: any, message: any) { // Add type annotations
       try {
         const data = JSON.parse(message.toString());
-        console.log(`Message from ${ws.data.clinetId}:`, data.type);
+        console.log(`Message from ${ws.data.clientId}:`, data.type); // Fixed typo
 
         switch (data.type) {
           case "subscribe_workflow":
@@ -80,7 +81,7 @@ const server = Bun.serve<WebSocketData>({
             );
             break;
 
-          case "unsbscribe":
+          case "unsubscribe": // Fixed typo: was "unsbscribe"
             await handleUnsubscribe(ws, data.channel);
             break;
 
@@ -106,20 +107,20 @@ const server = Bun.serve<WebSocketData>({
         }
       } catch (error) {
         console.error(
-          `Error handling message from ${ws.data.clinetId}:`,
+          `Error handling message from ${ws.data.clientId}:`, // Fixed typo
           error,
         );
         ws.send(
           JSON.stringify({
             type: "error",
-            message: "Invaild JSON message",
+            message: "Invalid JSON message", // Fixed typo
           }),
         );
       }
     },
 
-    async close(ws, code, message) {
-      console.log(`Client ${ws.data.clinetId} disconnected (${code})`);
+    async close(ws: any, code: any, message: any) { // Add type annotations
+      console.log(`Client ${ws.data.clientId} disconnected (${code})`); // Fixed typo
 
       await handleUnsubscribeAll(ws);
       activeConnections.delete(ws);
@@ -127,8 +128,8 @@ const server = Bun.serve<WebSocketData>({
       console.log(`Total connections: ${activeConnections.size}`);
     },
 
-    drain(ws) {
-      console.log(`Socket ${ws.data.clinetId} is ready for more data`);
+    drain(ws: any) { // Add type annotation
+      console.log(`Socket ${ws.data.clientId} is ready for more data`); // Fixed typo
     },
   },
 
@@ -176,7 +177,7 @@ async function handleWorkflowSubscription(ws: any, workflowId: string) {
 
     ws.send(
       JSON.stringify({
-        type: "subscribe",
+        type: "subscribed", // Fixed: was "subscribe"
         channel,
         workflowId,
         timestamp: Date.now(),
@@ -184,7 +185,7 @@ async function handleWorkflowSubscription(ws: any, workflowId: string) {
     );
 
     console.log(
-      `Client ${ws.data.clientId} subscribe to workflow: ${workflowId}`,
+      `Client ${ws.data.clientId} subscribed to workflow: ${workflowId}`, // Fixed typo
     );
   } catch (error) {
     console.error(`Failed to subscribe to workflow ${workflowId}:`, error);
@@ -226,7 +227,7 @@ async function handleExecutionSubscription(
       return;
     }
 
-    const unsbscribe = await subscribeToExecution(executionId, (data) => {
+    const unsubscribe = await subscribeToExecution(executionId, (data) => { // Fixed typo: was "unsbscribe"
       if (ws.readyState === 1) {
         ws.send(
           JSON.stringify({
@@ -238,7 +239,7 @@ async function handleExecutionSubscription(
       }
     });
 
-    ws.data.subscriptions.set(channel, unsbscribe);
+    ws.data.subscriptions.set(channel, unsubscribe); // Fixed typo
 
     ws.send(
       JSON.stringify({
@@ -326,7 +327,7 @@ async function handleUnsubscribeAll(ws: any) {
     if (channels.length > 0 && ws.readyState === 1) {
       ws.send(
         JSON.stringify({
-          type: "unsubscribe_all",
+          type: "unsubscribed_all", // Fixed typo: was "unsubscribe_all"
           channels,
           timestamp: Date.now(),
         }),
@@ -371,7 +372,6 @@ process.on("SIGTERM", async () => {
 });
 
 console.log(`WebSocket server started on ws://localhost:${server.port}/ws`);
-
-console.log(`Health check avaiable at http://localhost:${server.port}/health`);
+console.log(`Health check available at http://localhost:${server.port}/health`); // Fixed typo
 
 export default server;
