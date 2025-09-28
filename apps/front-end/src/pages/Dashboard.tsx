@@ -25,6 +25,7 @@ import {
 import { workflowsAPI, credentialsAPI } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
 import { BackButton } from "@/components/BackButton";
+import { Navbar } from "@/components/Navbar";
 
 interface Workflow {
   id: string;
