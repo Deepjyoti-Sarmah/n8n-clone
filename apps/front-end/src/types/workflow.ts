@@ -130,3 +130,16 @@ export const workflowToFlowNodes = (
     },
   }));
 };
+
+export const workflowToFlowEdges = (workflow: Workflow | null): Edge[] => {
+  if (!workflow || !workflow.connections) return [];
+
+  return Object.entries(workflow.connections).flatMap(([source, targets]) =>
+    targets.map((target) => ({
+      id: `${source}-${target}`,
+      source,
+      target,
+      type: "smoothstep",
+    })),
+  );
+};
