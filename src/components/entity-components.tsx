@@ -1,7 +1,6 @@
 import { PlusIcon, SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { ReactNode } from "react";
 import { Input } from "./ui/input";
 
 type EntityHaeaderProps = {
