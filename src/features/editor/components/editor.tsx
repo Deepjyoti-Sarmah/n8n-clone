@@ -73,6 +73,9 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
           hideAttribution: true,
         }}
         onInit={setEditor}
+        snapGrid={[10, 10]}
+        snapToGrid
+        panOnScroll
       >
         <Background />
         <Controls />
