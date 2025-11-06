@@ -4,21 +4,23 @@ import { type NodeProps, Position, useReactFlow } from "@xyflow/react";
 import type { LucideIcon } from "lucide-react";
 import Image from "next/image";
 import { memo, type ReactNode } from "react";
+import {
+  type NodeStatus,
+  NodeStatusIndicator,
+} from "@/components/react-flow/node-status-indicator";
 import { BaseHandle } from "../../../components/react-flow/base-handle";
 import {
   BaseNode,
   BaseNodeContent,
 } from "../../../components/react-flow/base-node";
 import { WorkflowNode } from "../../../components/workflow-node";
-import { set } from "zod/v3";
-import { NodeStatusIndicator } from "@/components/react-flow/node-status-indicator";
 
 interface BaseTriggerNodeProps extends NodeProps {
   icon: LucideIcon | string;
   name: string;
   description?: string;
   children?: ReactNode;
-  // status?: NodeStatus;
+  status?: NodeStatus;
   onSettings?: () => void;
   onDoubleClick?: () => void;
 }
@@ -31,6 +33,7 @@ export const BaseTriggerNode = memo(
     name,
     description,
     children,
+    status = "initial",
     onSettings,
     onDoubleClick,
   }: BaseTriggerNodeProps) => {
@@ -59,11 +62,12 @@ export const BaseTriggerNode = memo(
         showToolbar={selected}
       >
         <NodeStatusIndicator
-          status="loading"
+          status={status}
           variant="border"
           className="rounded-l-2xl"
         >
           <BaseNode
+            status={status}
             onDoubleClick={onDoubleClick}
             className="rounded-l-2xl relative group"
           >
