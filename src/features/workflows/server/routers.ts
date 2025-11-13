@@ -3,13 +3,13 @@ import { generateSlug } from "random-word-slugs";
 import z from "zod/v3";
 import { PAGINATION } from "@/config/constants";
 import { NodeType } from "@/generated/prisma/enums";
+import { inngest } from "@/inngest/client";
 import prisma from "@/lib/db";
 import {
   createTRPCRouter,
   premiumProcedure,
   protectedProcedure,
 } from "@/trpc/init";
-import { inngest } from "@/inngest/client";
 
 export const workflowsRouter = createTRPCRouter({
   execute: protectedProcedure
