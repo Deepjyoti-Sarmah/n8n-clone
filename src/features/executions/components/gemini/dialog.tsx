@@ -32,13 +32,14 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-export const AVAILABLE_MODELS = [
-  "gemini-1.5-flash",
-  "gemini-1.5-flash-8b",
-  "gemini-1.5-pro",
-  "gemini-1.0-pro",
-  "gemini-pro",
-] as const;
+// export const AVAILABLE_MODELS = [
+//   "gemini-2.0-flash",
+//   "gemini-1.5-flash",
+//   "gemini-1.5-flash-8b",
+//   "gemini-1.5-pro",
+//   "gemini-1.0-pro",
+//   "gemini-pro",
+// ] as const;
 
 const formSchema = z.object({
   variableName: z
@@ -48,7 +49,7 @@ const formSchema = z.object({
       message:
         "Variable name must start with a letter or underscore and contians only letters, numbers, and underscores",
     }),
-  model: z.enum(AVAILABLE_MODELS),
+  // model: z.string().min(1, "Model is required"),
   systemPrompt: z.string().optional(),
   userPrompt: z.string().min(1, "User propt is required"),
 });
@@ -72,7 +73,7 @@ export const GeminiDiaglog = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       variableName: defaultValues.variableName || "",
-      model: defaultValues?.model || AVAILABLE_MODELS[0],
+      // model: defaultValues?.model || AVAILABLE_MODELS[0],
       systemPrompt: defaultValues?.systemPrompt || "",
       userPrompt: defaultValues?.userPrompt || "",
     },
@@ -83,14 +84,14 @@ export const GeminiDiaglog = ({
     if (open) {
       form.reset({
         variableName: defaultValues.variableName || "",
-        model: defaultValues?.model || AVAILABLE_MODELS[0],
+        // model: defaultValues?.model || AVAILABLE_MODELS[0],
         systemPrompt: defaultValues?.systemPrompt || "",
         userPrompt: defaultValues?.userPrompt || "",
       });
     }
   }, [open, defaultValues, form]);
 
-  const watchVariableName = form.watch("variableName") || "myAPICall";
+  const watchVariableName = form.watch("variableName") || "myGemini";
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     onSubmit(values);
@@ -118,7 +119,7 @@ export const GeminiDiaglog = ({
                 <FormItem>
                   <FormLabel>Variable Name</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="myApiCall" />
+                    <Input {...field} placeholder="myGemini" />
                   </FormControl>
                   <FormDescription>
                     Use this name to reference the result in other nodes:{" "}
@@ -129,7 +130,7 @@ export const GeminiDiaglog = ({
               )}
             />
 
-            <FormField
+            {/*<FormField
               control={form.control}
               name="model"
               render={({ field }) => (
@@ -158,7 +159,7 @@ export const GeminiDiaglog = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            />*/}
 
             <FormField
               control={form.control}

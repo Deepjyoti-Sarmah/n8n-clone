@@ -2,6 +2,7 @@ import { googleFormTriggerExecutor } from "@/features/triggers/components/google
 import { manualTriggerExecutor } from "@/features/triggers/components/manual-trigger/executor";
 import { stripeTriggerExecutor } from "@/features/triggers/components/stripe-trigger/executor";
 import { NodeType } from "@/generated/prisma/enums";
+import { geminiExecutor } from "../components/gemini/executor";
 import { httpRequestExecutor } from "../components/http-request/executor";
 import type { NodeExecutor } from "../types";
 
@@ -11,6 +12,9 @@ export const executorRegistry: Record<NodeType, NodeExecutor> = {
   [NodeType.HTTP_REQUEST]: httpRequestExecutor,
   [NodeType.GOOGLE_FORM_TRIGGER]: googleFormTriggerExecutor,
   [NodeType.STRIPE_TRIGGER]: stripeTriggerExecutor,
+  [NodeType.GEMINI]: geminiExecutor,
+  [NodeType.ANTHROPIC]: geminiExecutor, //TODO: fix later
+  [NodeType.OPENAI]: geminiExecutor, // TODO: fix later
 };
 
 export const getExecutor = (type: NodeType): NodeExecutor => {
