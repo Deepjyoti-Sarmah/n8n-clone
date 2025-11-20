@@ -1,7 +1,6 @@
-import type { Edge, Node } from "@xyflow/react";
 import z from "zod";
 import { PAGINATION } from "@/config/constants";
-import { CredentialType, NodeType } from "@/generated/prisma/enums";
+import { CredentialType } from "@/generated/prisma/enums";
 import prisma from "@/lib/db";
 import {
   createTRPCRouter,
@@ -137,5 +136,22 @@ export const credentialsRouter = createTRPCRouter({
         hasNextPage,
         hasPreviousPage,
       };
+    }),
+
+  getByType: protectedProcedure
+    .input(
+      z.object({
+        type: z.enum(CredentialType),
+      }),
+    )
+    .query(({ input, ctx }) => {
+      const { type } = input;
+
+      return prisma.credential.findMany({
+        where: { type, userId: ctx.auth.user.id },
+        orderBy: {
+          updatedAt: "desc",
+        },
+      });
     }),
 });
