@@ -32,15 +32,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-// export const AVAILABLE_MODELS = [
-//   "gemini-2.0-flash",
-//   "gemini-1.5-flash",
-//   "gemini-1.5-flash-8b",
-//   "gemini-1.5-pro",
-//   "gemini-1.0-pro",
-//   "gemini-pro",
-// ] as const;
-
 const formSchema = z.object({
   variableName: z
     .string()
