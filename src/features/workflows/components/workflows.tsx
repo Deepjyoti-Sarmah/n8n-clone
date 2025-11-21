@@ -1,5 +1,9 @@
 "use client";
 
+import { formatDistanceToNow } from "date-fns";
+import { WorkflowIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import type React from "react";
 import {
   EmptyView,
   EntityContainer,
@@ -11,19 +15,15 @@ import {
   ErrrorView,
   LoadingView,
 } from "@/components/entity-components";
+import type { Workflow } from "@/generated/prisma/client";
+import { useEntitySearch } from "@/hooks/use-entity-search";
+import { useUpgradeModal } from "@/hooks/use-upgrade-model";
 import {
   useCreateWorkflow,
   useRemoveWorkflow,
   useSuspenseWorkflows,
 } from "../hooks/use-workflows";
-import React from "react";
-import { useUpgradeModal } from "@/hooks/use-upgrade-model";
-import { useRouter } from "next/navigation";
 import { useWorflowsParams } from "../hooks/use-workflows-params";
-import { useEntitySearch } from "@/hooks/use-entity-search";
-import type { Workflow } from "@/generated/prisma/client";
-import { WorkflowIcon } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
 
 export const WorkflowsSearch = () => {
   const [params, setParams] = useWorflowsParams();
