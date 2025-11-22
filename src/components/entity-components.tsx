@@ -1,3 +1,4 @@
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import {
   AlertTriangleIcon,
   Loader2Icon,
@@ -7,10 +8,16 @@ import {
   SearchIcon,
   TrashIcon,
 } from "lucide-react";
-import { Button } from "./ui/button";
 import Link from "next/link";
-import { Input } from "./ui/input";
-import { Extensions } from "@prisma/client/runtime/library";
+import type React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import {
   Empty,
   EmptyContent,
@@ -19,20 +26,12 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "./ui/empty";
-import React, { act, ReactNode } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import { Input } from "./ui/input";
 
 type EntityHaeaderProps = {
   title: string;
   description?: string;
-  newButtonLable: string;
+  newButtonLable?: string;
   disabled?: boolean;
   isCreating?: boolean;
 } & (
