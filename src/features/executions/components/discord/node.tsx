@@ -2,11 +2,11 @@
 
 import { type Node, type NodeProps, useReactFlow } from "@xyflow/react";
 import { memo, useState } from "react";
+import { DISCORD_CHANNEL_NAME } from "@/inngest/channels/discord";
 import { useNodeStatus } from "../../hooks/use-node-status";
 import { BaseExecutionNode } from "../base-execution-node";
-import { DiscordDiaglog, DiscordFormValues } from "./dialog";
-import { DISCORD_CHANNEL_NAME } from "@/inngest/channels/discord";
 import { fetchDiscordRealtimeToken } from "./actions";
+import { DiscordDiaglog, type DiscordFormValues } from "./dialog";
 
 type DiscordNodeData = {
   webhookUrl?: string;
