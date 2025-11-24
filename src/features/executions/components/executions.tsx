@@ -102,6 +102,10 @@ const getStatusIcon = (status: ExecutionStatus) => {
   }
 };
 
+const formStatus = (status: ExecutionStatus) => {
+  return status.charAt(0) + status.slice(1).toLocaleLowerCase();
+};
+
 export const ExecutionsItem = ({
   data,
 }: {
@@ -131,7 +135,7 @@ export const ExecutionsItem = ({
   return (
     <EntityItem
       href={`/executions/${data.id}`}
-      title={data.status}
+      title={formStatus(data.status)}
       subtitle={subtitle}
       image={
         <div className="size-8 flex items-center justify-center">
