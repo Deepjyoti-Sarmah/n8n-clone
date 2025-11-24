@@ -6,9 +6,6 @@ export async function POST(request: NextRequest) {
     const url = new URL(request.url);
     const workflowId = url.searchParams.get("workflowId");
 
-    //TODO: remove before deployment
-    // console.log("URL: ", url);
-    // console.log("workflowId: ", workflowId);
 
     if (!workflowId) {
       return NextResponse.json(
@@ -23,8 +20,6 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    //TODO: remove before deployment
-    // console.log("Google trigger body: ", body);
 
     const formData = {
       formId: body.formId,
@@ -36,8 +31,6 @@ export async function POST(request: NextRequest) {
       raw: body,
     };
 
-    //TODO: remove before deployment
-    // console.log("Google Form data: ", formData);
 
     // Trigger an Inngest job
     await sendWorkflowExecution({
@@ -47,8 +40,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    //TODO: remove before deployment
-    // console.log("WorkflowExecution: ", workflowEcecution);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Google form webhook error:", error);
