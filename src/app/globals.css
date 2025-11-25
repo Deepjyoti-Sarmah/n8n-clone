@@ -77,14 +77,14 @@
     --popover: oklch(0.9694 0.0011 197.1386);
     --popover-foreground: oklch(0.2836 0.0438 338.7746);
     --primary: oklch(0.6909 0.1462 1.0887);
-    --primary-foreground: oklch(1 0 0);
+    --primary-foreground: oklch(1.0000 0 0);
     --secondary: oklch(0.8698 0.0052 145.5306);
     --secondary-foreground: oklch(0.4457 0.0343 337.2553);
     --muted: oklch(0.9248 0.0051 145.5339);
-    --muted-foreground: oklch(0.5543 0.0268 339.094);
+    --muted-foreground: oklch(0.5543 0.0268 339.0940);
     --accent: oklch(0.9511 0.0108 76.5977);
     --accent-foreground: oklch(0.3756 0.0358 337.5704);
-    --destructive: oklch(0.8131 0.1959 137.5705);
+    --destructive: oklch(0.5198 0.1956 24.7048);
     --border: oklch(0.8698 0.0052 145.5306);
     --input: oklch(0.8698 0.0052 145.5306);
     --ring: oklch(0.6909 0.1462 1.0887);
@@ -96,12 +96,12 @@
     --sidebar: oklch(0.8698 0.0052 145.5306);
     --sidebar-foreground: oklch(0.2836 0.0438 338.7746);
     --sidebar-primary: oklch(0.6909 0.1462 1.0887);
-    --sidebar-primary-foreground: oklch(1 0 0);
+    --sidebar-primary-foreground: oklch(1.0000 0 0);
     --sidebar-accent: oklch(0.9511 0.0108 76.5977);
     --sidebar-accent-foreground: oklch(0.3756 0.0358 337.5704);
     --sidebar-border: oklch(0.8698 0.0052 145.5306);
     --sidebar-ring: oklch(0.6909 0.1462 1.0887);
-    --destructive-foreground: oklch(1 0 0);
+    --destructive-foreground: oklch(1.0000 0 0);
     --font-sans: Plus Jakarta Sans, sans-serif;
     --font-serif: Lora, serif;
     --font-mono: Roboto Mono, monospace;
@@ -113,24 +113,14 @@
     --shadow-offset-y: 1.5px;
     --letter-spacing: 0em;
     --spacing: 0.25rem;
-    --shadow-2xs: 0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.09);
-    --shadow-xs: 0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.09);
-    --shadow-sm:
-        0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.18),
-        0.5px 1px 2px 1.5px hsl(340 2.9412% 60% / 0.18);
-    --shadow:
-        0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.18),
-        0.5px 1px 2px 1.5px hsl(340 2.9412% 60% / 0.18);
-    --shadow-md:
-        0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.18),
-        0.5px 2px 4px 1.5px hsl(340 2.9412% 60% / 0.18);
-    --shadow-lg:
-        0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.18),
-        0.5px 4px 6px 1.5px hsl(340 2.9412% 60% / 0.18);
-    --shadow-xl:
-        0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.18),
-        0.5px 8px 10px 1.5px hsl(340 2.9412% 60% / 0.18);
-    --shadow-2xl: 0.5px 1.5px 6px 2.5px hsl(340 2.9412% 60% / 0.45);
+    --shadow-2xs: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.09);
+    --shadow-xs: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.09);
+    --shadow-sm: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.18), 0.5px 1px 2px 1.5px hsl(340.0000 2.9412% 60.0000% / 0.18);
+    --shadow: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.18), 0.5px 1px 2px 1.5px hsl(340.0000 2.9412% 60.0000% / 0.18);
+    --shadow-md: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.18), 0.5px 2px 4px 1.5px hsl(340.0000 2.9412% 60.0000% / 0.18);
+    --shadow-lg: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.18), 0.5px 4px 6px 1.5px hsl(340.0000 2.9412% 60.0000% / 0.18);
+    --shadow-xl: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.18), 0.5px 8px 10px 1.5px hsl(340.0000 2.9412% 60.0000% / 0.18);
+    --shadow-2xl: 0.5px 1.5px 6px 2.5px hsl(340.0000 2.9412% 60.0000% / 0.45);
     --tracking-normal: 0em;
 }
 
@@ -143,28 +133,28 @@
     --popover-foreground: oklch(0.9279 0.0176 334.1943);
     --primary: oklch(0.7533 0.1227 355.5943);
     --primary-foreground: oklch(0.2254 0.0083 153.2364);
-    --secondary: oklch(0.338 0.011 145.3272);
+    --secondary: oklch(0.3380 0.0110 145.3272);
     --secondary-foreground: oklch(0.8719 0.0119 334.1065);
     --muted: oklch(0.2297 0.0083 153.2517);
     --muted-foreground: oklch(0.7152 0.0224 337.8842);
     --accent: oklch(0.3916 0.0106 145.3695);
     --accent-foreground: oklch(0.8719 0.0119 334.1065);
-    --destructive: oklch(0.8131 0.1959 137.5705);
-    --border: oklch(0.338 0.011 145.3272);
-    --input: oklch(0.338 0.011 145.3272);
+    --destructive: oklch(0.5198 0.1956 24.7048);
+    --border: oklch(0.3380 0.0110 145.3272);
+    --input: oklch(0.3380 0.0110 145.3272);
     --ring: oklch(0.7533 0.1227 355.5943);
     --chart-1: oklch(0.7533 0.1227 355.5943);
     --chart-2: oklch(0.6909 0.1462 1.0887);
     --chart-3: oklch(0.6251 0.1615 7.9678);
     --chart-4: oklch(0.5613 0.1505 9.6601);
     --chart-5: oklch(0.4863 0.1258 8.4673);
-    --sidebar: oklch(0.338 0.011 145.3272);
+    --sidebar: oklch(0.3380 0.0110 145.3272);
     --sidebar-foreground: oklch(0.9279 0.0176 334.1943);
     --sidebar-primary: oklch(0.7533 0.1227 355.5943);
     --sidebar-primary-foreground: oklch(0.2254 0.0083 153.2364);
     --sidebar-accent: oklch(0.3916 0.0106 145.3695);
     --sidebar-accent-foreground: oklch(0.8719 0.0119 334.1065);
-    --sidebar-border: oklch(0.338 0.011 145.3272);
+    --sidebar-border: oklch(0.3380 0.0110 145.3272);
     --sidebar-ring: oklch(0.7533 0.1227 355.5943);
     --destructive-foreground: oklch(0.2254 0.0083 153.2364);
     --radius: 0.85rem;
@@ -181,21 +171,11 @@
     --spacing: 0.25rem;
     --shadow-2xs: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.09);
     --shadow-xs: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.09);
-    --shadow-sm:
-        0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18),
-        0.5px 1px 2px 1.5px hsl(0 0% 10.1961% / 0.18);
-    --shadow:
-        0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18),
-        0.5px 1px 2px 1.5px hsl(0 0% 10.1961% / 0.18);
-    --shadow-md:
-        0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18),
-        0.5px 2px 4px 1.5px hsl(0 0% 10.1961% / 0.18);
-    --shadow-lg:
-        0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18),
-        0.5px 4px 6px 1.5px hsl(0 0% 10.1961% / 0.18);
-    --shadow-xl:
-        0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18),
-        0.5px 8px 10px 1.5px hsl(0 0% 10.1961% / 0.18);
+    --shadow-sm: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18), 0.5px 1px 2px 1.5px hsl(0 0% 10.1961% / 0.18);
+    --shadow: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18), 0.5px 1px 2px 1.5px hsl(0 0% 10.1961% / 0.18);
+    --shadow-md: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18), 0.5px 2px 4px 1.5px hsl(0 0% 10.1961% / 0.18);
+    --shadow-lg: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18), 0.5px 4px 6px 1.5px hsl(0 0% 10.1961% / 0.18);
+    --shadow-xl: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.18), 0.5px 8px 10px 1.5px hsl(0 0% 10.1961% / 0.18);
     --shadow-2xl: 0.5px 1.5px 6px 2.5px hsl(0 0% 10.1961% / 0.45);
 }
 
@@ -205,7 +185,7 @@
     }
     body {
         @apply bg-background text-foreground;
-        letter-spacing: var(--tracking-normal);
+    letter-spacing: var(--tracking-normal);
     }
 }
 
