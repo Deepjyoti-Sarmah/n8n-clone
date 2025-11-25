@@ -5,8 +5,8 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { CredentialType } from "@/generated/prisma/enums";
 import { useTRPC } from "@/trpc/client";
+import type { CredentialType } from "../../../../generate/prisma/enums";
 import { useCredentialsParams } from "./use-credentials-params";
 
 export const useSuspenseCredentials = () => {
