@@ -7,9 +7,6 @@ export const requireAuth = async () => {
     headers: await headers(),
   });
 
-  //TODO: remove before deploymment
-  console.log("session: ", session);
-
   if (!session) {
     redirect("/login");
   }
@@ -21,9 +18,6 @@ export const requireUnauth = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
-  //TODO: remove before deploymment
-  console.log("session unauth: ", session);
 
   if (session) {
     redirect("/");
