@@ -18,8 +18,8 @@ import {
   ErrrorView,
   LoadingView,
 } from "@/components/entity-components";
-import type { Execution } from "../../../../generate/prisma/client";
-import { ExecutionStatus } from "../../../../generate/prisma/enums";
+import type { Execution } from "@/generated/prisma/client";
+import { ExecutionStatus } from "@/generated/prisma/enums";
 import { useSuspenseExecutions } from "../hooks/use-executions";
 import { useExecutionsParams } from "../hooks/use-executions-params";
 
@@ -118,10 +118,10 @@ export const ExecutionsItem = ({
 }) => {
   const duration = data.completedAt
     ? Math.round(
-        (new Date(data.completedAt).getTime() -
-          new Date(data.startedAt).getTime()) /
-          1000,
-      )
+      (new Date(data.completedAt).getTime() -
+        new Date(data.startedAt).getTime()) /
+      1000,
+    )
     : null;
 
   const subtitle = (

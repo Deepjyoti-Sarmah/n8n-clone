@@ -22,7 +22,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ExecutionStatus } from "../../../../generate/prisma/enums";
+import { ExecutionStatus } from "@/generated/prisma/enums";
 import { useSuspenseExecution } from "../hooks/use-executions";
 
 const getStatusIcon = (status: ExecutionStatus) => {
@@ -49,10 +49,10 @@ export const ExecutionView = ({ executionId }: { executionId: string }) => {
 
   const duration = execution.completedAt
     ? Math.round(
-        (new Date(execution.completedAt).getTime() -
-          new Date(execution.startedAt).getTime()) /
-          1000,
-      )
+      (new Date(execution.completedAt).getTime() -
+        new Date(execution.startedAt).getTime()) /
+      1000,
+    )
     : null;
 
   return (

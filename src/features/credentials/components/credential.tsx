@@ -30,13 +30,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CredentialType } from "@/generated/prisma/enums";
 import { useUpgradeModal } from "@/hooks/use-upgrade-model";
 import {
   useCreateCredential,
   useSuspenseCredential,
   useUpdateCredential,
 } from "../hooks/use-credentials";
-import { CredentialType } from "../../../../generate/prisma/enums";
 
 interface CredentialFormProps {
   initalData?: {

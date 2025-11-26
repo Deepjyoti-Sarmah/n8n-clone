@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCredentialsByType } from "@/features/credentials/hooks/use-credentials";
-import { CredentialType } from "../../../../../generate/prisma/enums";
+import { CredentialType } from "@/generated/prisma/enums";
 
 const formSchema = z.object({
   variableName: z

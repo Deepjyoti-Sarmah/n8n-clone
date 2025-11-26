@@ -21,10 +21,10 @@ import { nodeComponents } from "@/config/node-components";
 import { useSuspenseWorkflow } from "@/features/workflows/hooks/use-workflows";
 import "@xyflow/react/dist/style.css";
 import { useSetAtom } from "jotai";
+import { NodeType } from "@/generated/prisma/enums";
 import { editorAtom } from "../store/atoms";
 import { AddNodeButton } from "./add-node-button";
 import { ExecuteWorkflowButton } from "./execute-workflow-button";
-import { NodeType } from "../../../../generate/prisma/enums";
 
 export const EditorLoading = () => {
   return <LoadingView message="Loading editor..." />;

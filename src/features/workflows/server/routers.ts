@@ -2,6 +2,7 @@ import type { Edge, Node } from "@xyflow/react";
 import { generateSlug } from "random-word-slugs";
 import z from "zod/v3";
 import { PAGINATION } from "@/config/constants";
+import { NodeType } from "@/generated/prisma/enums";
 import { sendWorkflowExecution } from "@/inngest/utils";
 import prisma from "@/lib/db";
 import {
@@ -9,7 +10,6 @@ import {
   premiumProcedure,
   protectedProcedure,
 } from "@/trpc/init";
-import { NodeType } from "../../../../generate/prisma/enums";
 
 export const workflowsRouter = createTRPCRouter({
   execute: protectedProcedure
